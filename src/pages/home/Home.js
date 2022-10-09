@@ -33,7 +33,7 @@ function Home() {
                 <Stack>
                     <p>
                         Space Force
-                        Flight Agency
+                        Travel Agency
                     </p>
                 </Stack>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
