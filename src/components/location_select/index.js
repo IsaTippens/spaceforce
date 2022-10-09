@@ -11,14 +11,12 @@ function LocationSelect(props) {
         "Neptune",
         "Pluto"
     ]
-
-    const [location, setLocation] = useState("Earth");
-
     const generateMenuItems = () => {
         return locations.map((location) => {
             return (<MenuItem value={location}>{location}</MenuItem>);
         });
     }
+
     return (
         <Box sx={{
         }}>
@@ -27,11 +25,9 @@ function LocationSelect(props) {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={location}
+                    value={props.selected}
                     label={props.label}
-                    onChange={(event) => {
-                        setLocation(event.target.value);
-                    }}
+                    onChange={props.onChange}
                 >
                     {generateMenuItems()}
                 </Select>

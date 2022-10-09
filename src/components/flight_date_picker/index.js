@@ -4,10 +4,8 @@ import TextField from '@mui/material/TextField';
 function FlightDatePicker(props) {
     return (
         <TextField
-        id="date"
-        label={props.label}
+        {...props}
         type="date"
-        defaultValue="2022-10-04"
         InputLabelProps={{
           shrink: true,
         }}

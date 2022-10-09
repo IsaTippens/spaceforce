@@ -1,6 +1,7 @@
 import BookingTab from '../../components/booking_tab/BookingTab';
 import { Paper, Box, Card, CardContent, Typography, Stack, Grid, Tabs, Tab } from '@mui/material';
 import {useState} from 'react';
+import {BookingContext} from '../../global/contexts';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -15,7 +16,7 @@ function TabPanel(props) {
       >
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            {children}
           </Box>
         )}
       </div>
@@ -26,7 +27,8 @@ function TabPanel(props) {
 function Home() {
     const [value, setValue] = useState(0);
     return (
-        <Grid container pl={2}>
+        <Grid container p={2} spacing={2}>
+            <Grid item xs={4}>
             <Paper >
                 <Stack>
                     <p>
@@ -53,20 +55,11 @@ function Home() {
                     ¯\_(ツ)_/¯
                 </TabPanel>
             </Paper>
+            </Grid>
         </Grid>
     );
 
 }
 
-const homeStyle = {
-    uipill: {
-        backgroundColor: 'red',
-        padding: "10px",
-        borderRadius: "10px",
-    },
-    tab: {
-        padding: "10px",
-    }
-}
 
 export default Home;

@@ -1,10 +1,11 @@
 import { FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
 import { useState } from "react";
 
-function FlightTypeSelect(props) {
+function FlightClassSelect(props) {
     const flightTypes = [
-        "One-Way",
-        "Round-Trip",
+        "Economy",
+        "Business",
+        "VIP",
     ]
 
     const generateMenuItems = () => {
@@ -28,4 +29,4 @@ function FlightTypeSelect(props) {
     );
 }
 
-export default FlightTypeSelect;
+export default FlightClassSelect;
