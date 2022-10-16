@@ -27,6 +27,16 @@ function Booking(props) {
             setDepartureDate(location.state.departureDate);
             setReturnDate(location.state.returnDate);
         }
+        let s = location.state;
+        if (s.numAdults) {
+            setNumAdults(s.numAdults);
+        }
+        if (s.numChildren) {
+            setNumChildren(s.numChildren);
+        }
+        if (s.flightClass) {
+            setFlightClass(s.flightClass);
+        }
     }, []);
 
     let prices = {
