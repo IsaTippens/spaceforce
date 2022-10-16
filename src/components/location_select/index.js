@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Box, TextField } from "@mui/material";
 import { useState } from "react";
 
 function LocationSelect(props) {
@@ -20,18 +20,18 @@ function LocationSelect(props) {
     return (
         <Box sx={{
         }}>
-            <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">{props.label}</InputLabel>
-                <Select
+                <TextField
+                    {...props}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={props.selected}
                     label={props.label}
                     onChange={props.onChange}
+                    select
+                    fullWidth
                 >
                     {generateMenuItems()}
-                </Select>
-            </FormControl>
+                </TextField>
         </Box>
     );
 }

@@ -6,15 +6,25 @@ import reportWebVitals from './reportWebVitals';
 
 import Space from './Space';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+})
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div id="space">
       <Space />
     </div>
-    <div id="app">
-      <App />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div id="app">
+        <App />
+      </div>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

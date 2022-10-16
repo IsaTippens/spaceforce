@@ -1,4 +1,4 @@
-import { Button, TextField, Box, Stack, Typography, Paper, Grid, Container } from "@mui/material";
+import { Button, TextField, Box, Stack, Typography, Paper, Grid, Container, Breadcrumbs } from "@mui/material";
 import LocationSelect from "../../components/location_select";
 import FlightTypeSelect from "../../components/flight_type_select";
 import FlightDatePicker from "../../components/flight_date_picker";
@@ -7,9 +7,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function Booking(props) {
-    const [origin, setOrigin] = useState(null);
-    const [destination, setDestination] = useState(null);
-    const [flightType, setFlightType] = useState(null);
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [flightType, setFlightType] = useState('');
     const [flightClass, setFlightClass] = useState("Economy");
     const [departureDate, setDepartureDate] = useState(new Date());
     const [returnDate, setReturnDate] = useState(new Date());
@@ -19,6 +19,7 @@ function Booking(props) {
     const location = useLocation();
 
     useEffect(() => {
+        document.title = "Booking | SpaceForce Flight Agency";
         if (location.state) {
             setOrigin(location.state.origin);
             setDestination(location.state.destination);
@@ -85,14 +86,36 @@ function Booking(props) {
     }
 
     const proceedClick = () => {
+        let t = getTotal()
         navigate("/payment", {
-            replace: false,
             state: {
-                total: getTotal
+                origin,
+                destination,
+                flightType,
+                flightClass,
+                departureDate,
+                returnDate,
+                numAdults,
+                numChildren,
+
+                total: t
             }
         })
     }
 
+    const backClick = () => {
+        navigate("/", {
+            state: {
+                origin,
+                destination,
+                flightType,
+                departureDate,
+                returnDate
+            }
+        })
+    }
+
+    
     const getTotal = () => {
         let adultPrice = prices[flightClass]["Adult"];
         let childPrice = prices[flightClass]["Child"];
@@ -102,20 +125,25 @@ function Booking(props) {
 
     return (
         <Paper>
-            <Stack component="form" noValidate spacing={2} p={2}>
+            <Stack  spacing={2} p={2}>
                 <Typography variant="h5" component="div">
                     Book a flight
                 </Typography>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Typography color="text.secondary">Home</Typography>
+                    <Typography color="text.primary">Booking</Typography>
+                    <Typography color="text.secondary">Payment</Typography>
+                </Breadcrumbs>
                 <Grid container spacing={2}>
                     <Grid item xs={4} >
-                        <Stack component="form" noValidate spacing={2}>
+                        <Stack spacing={2}>
                             <Typography variant="p" align="left">
                                 Locations
                             </Typography>
-                            <LocationSelect label="Departure" selected={origin} onChange={(event) => { setOrigin(event.target.value) }} />
-                            <LocationSelect label="Destination" selected={destination} onChange={(event) => { setDestination(event.target.value) }} />
+                            <LocationSelect label="Departure" selected={origin} onChange={(event) => { setOrigin(event.target.value) }} defaultValue={"Earth"} />
+                            <LocationSelect label="Destination" selected={destination} onChange={(event) => { setDestination(event.target.value) }} defaultValue={"Mars"}/>
                             <FlightTypeSelect label="Flight Type" value={flightType} onChange={(event) => { setFlightType(event.target.value) }} />
-                            <Stack component="form" noValidate spacing={2}>
+                            <Stack spacing={2}>
                                 <Typography variant="p" align="left">
                                     Date
                                 </Typography>
@@ -175,7 +203,7 @@ function Booking(props) {
                                     }}
                                 />
                             </Stack>
-                            <Stack component="form" noValidate spacing={2}>
+                            <Stack spacing={2}>
                                 <Typography variant="p" align="left">
                                     Flight Details
                                 </Typography>
@@ -184,11 +212,11 @@ function Booking(props) {
                         </Stack>
                     </Grid>
                     <Grid container item xs={4}>
-                        <Stack component="form" noValidate spacing={2}>
+                        <Stack spacing={2}>
                             {printReceipt()}
                             <Stack direction="row" spacing={2}>
+                                <Button variant="contained" onClick={backClick} color="error" flex={1}>Back</Button>
                                 <Button variant="contained" onClick={proceedClick} mr={2}>Proceed</Button>
-                                <Button variant="contained" onClick={proceedClick} color="error" flex={1}>Cancel</Button>
                             </Stack>
                         </Stack>
                     </Grid>

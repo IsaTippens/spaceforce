@@ -18,10 +18,12 @@ function FlightTypeSelect(props) {
                 <InputLabel id="demo-simple-select-label">{props.label}</InputLabel>
                 <Select
                     {...props}
+                    defaultValue={"One-Way"}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                 >
-                    {generateMenuItems()}
+                    <MenuItem value={"One-Way"}>{"One-Way"}</MenuItem>
+                    <MenuItem value={"Round-Trip"}>{"Round-Trip"}</MenuItem>
                 </Select>
             </FormControl>
         </Box>
