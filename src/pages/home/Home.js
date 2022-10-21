@@ -1,7 +1,6 @@
 import BookingTab from '../../components/booking_tab/BookingTab';
 import { Paper, Box, Card, CardContent, Typography, Stack, Grid, Tabs, Tab } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { BookingContext } from '../../global/contexts';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
