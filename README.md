@@ -7,4 +7,4 @@ To run the server, open a terminal/commandline and do
 
 ### Client frontend
 Inside another terminal/commandline, run
-cd client` then `npm start`
+`cd client` then `npm start`
