@@ -26,8 +26,10 @@ function Payment(props) {
             });
     }
     const proceedClick = () => {
-        alert("Payment successful!\n Your ticket ID is: " + bookingId);
-        navigate("/");
+        navigate("/receipt",
+            {
+                state: location.state,
+            });
     }
 
     const genID = () => {
@@ -77,6 +79,7 @@ function Payment(props) {
                                 <Typography color="text.secondary">Home</Typography>
                                 <Typography color="text.secondary">Booking</Typography>
                                 <Typography color="text.primary">Payment</Typography>
+                                <Typography color="text.secondary">Receipt</Typography>
                             </Breadcrumbs>
                             <Stack spacing={2}>
                                 <TextField
