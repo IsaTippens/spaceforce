@@ -2,9 +2,21 @@
 
 ## Running
 ### Server backend
-To run the server, open a terminal/commandline and do
+Open a terminal/commandline.
+
+Change directory to the server folder
+
+`cd server`
+
+To create the Database and tables run 
+
+`npm create-mysql`
+
+To run the server, and do
+
 `cd server` then `npm start`
 
 ### Client frontend
 Inside another terminal/commandline, run
+
 `cd client` then `npm start`
