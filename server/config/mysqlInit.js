@@ -13,8 +13,13 @@ db.query("CREATE DATABASE spaceforce", (err, result) => {
     console.log(result)
 });)
 
+db.query("USE DATABASE spaceforce)", (err, result) => {
+    if (err) {
+        console.log(err)
+    }
+    console.log(result)
 
-db.query("USE spaceforce CREATE TABLE passenger (PassengerID int NOT NULL,PassportNum int NOT NULL,PassengerName varchar(255) DEFAULT NULL,PRIMARY KEY (`PassengerID`))", (err, result) => {
+db.query("CREATE TABLE passenger (PassengerID int NOT NULL,PassportNum int NOT NULL,PassengerName varchar(255) DEFAULT NULL,PRIMARY KEY (`PassengerID`))", (err, result) => {
     if (err) {
         console.log(err)
     }
