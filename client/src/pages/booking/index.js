@@ -143,6 +143,7 @@ function Booking(props) {
                     <Typography color="text.secondary">Home</Typography>
                     <Typography color="text.primary">Booking</Typography>
                     <Typography color="text.secondary">Payment</Typography>
+                    <Typography color="text.secondary">Receipt</Typography>
                 </Breadcrumbs>
                 <Grid container spacing={2}>
                     <Grid item xs={4} >

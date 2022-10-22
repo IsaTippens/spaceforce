@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import Booking from './pages/booking';
 import Payment from './pages/payment';
 import Landing from './pages/landing';
+import Receipt from './pages/receipt';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import {
@@ -12,6 +13,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="booking/" element={<Booking />} />
             <Route path="payment/" element={<Payment />} />
+            <Route path="receipt/" element={<Receipt />} />
           </Route>
         </Routes>
       </Router>
