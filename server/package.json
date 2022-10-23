@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "create-mysql": "node config/mysqlInit.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

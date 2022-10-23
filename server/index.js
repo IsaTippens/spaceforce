@@ -1,9 +1,5 @@
 require('dotenv').config()
 
-
-console.log("SERVER BEEP BOOP RUNNNING");
-
-
 const app = require('./app');
 const PORT = 3002;
 
