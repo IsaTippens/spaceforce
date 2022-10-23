@@ -6,14 +6,14 @@ const db = mysql.createConnection({
     password: process.env.MYSQL_PASSWORD || "",
 })
 
-db.query("CREATE DATABASE spaceforce", (err, result) => {
+db.query(`CREATE DATABASE spaceforce`, (err, result) => {
     if (err) {
         console.log(err)
     }
     console.log(result)
 });
 
-db.query("USE spaceforce", (err, result) => {
+db.query(`USE spaceforce`, (err, result) => {
     if (err) {
         console.log(err)
     }
@@ -21,10 +21,10 @@ db.query("USE spaceforce", (err, result) => {
 });
 
 db.query(`CREATE TABLE passenger (
-    PassengerID int NOT NULL,
+    PassengerID int NOT NULL AUTO_INCREMENT,
     PassportNum int NOT NULL,
-    PassengerName varchar(255) DEFAULT NULL,
-    PRIMARY KEY ("PassengerID")
+    PassengerName varchar(255) NOT NULL,
+    PRIMARY KEY (PassengerID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
@@ -33,11 +33,11 @@ db.query(`CREATE TABLE passenger (
 });
 
 db.query(`CREATE TABLE location ( 
-    LocID int NOT NULL, 
+    LocID int NOT NULL AUTO_INCREMENT, 
     LocName varchar(255) DEFAULT NULL, 
     LocType varchar(255) DEFAULT NULL, 
     LandingZone varchar(255) DEFAULT NULL, 
-    PRIMARY KEY ("LocID")
+    PRIMARY KEY (LocID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
@@ -46,9 +46,9 @@ db.query(`CREATE TABLE location (
 });
 
 db.query(`CREATE TABLE spacecarrier (
-    CarrierID int NOT NULL,
+    CarrierID int NOT NULL AUTO_INCREMENT,
     CarrierName varchar(255) DEFAULT NULL,
-    PRIMARY KEY ("CarrierID")
+    PRIMARY KEY (CarrierID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
@@ -57,10 +57,10 @@ db.query(`CREATE TABLE spacecarrier (
 });
 
 db.query(`CREATE TABLE spaceship (
-    ShipID int NOT NULL,
+    ShipID int NOT NULL AUTO_INCREMENT,
     Capacity int NOT NULL,
     Model varchar(255) DEFAULT NULL,
-    PRIMARY KEY("ShipID")
+    PRIMARY KEY(ShipID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
@@ -69,26 +69,19 @@ db.query(`CREATE TABLE spaceship (
 });
 
 db.query(`CREATE TABLE flight (
-    FlightID int NOT NULL,
+    FlightID int NOT NULL AUTO_INCREMENT,
     DepartureTime int DEFAULT NULL,
     FlightClass varchar(255) DEFAULT NULL,
     FlightType varchar(255) DEFAULT NULL,
-    DepartureLoc int DEFAULT NULL,
-    Destination int DEFAULT NULL,
-    SpaceShipID int DEFAULT NULL,
-    CarrierID int DEFAULT NULL,
-    TicketNum int DEFAULT NULL,
-    PRIMARY KEY ("FlightID"),
-    KEY DepartureLoc ("DepartureLoc"),
-    KEY Destination ("Destination"),
-    KEY SpaceShipID ("SpaceShipID"),
-    KEY CarrierID ("CarrierID"),
-    KEY TicketNum ("TicketNum"),
-    CONSTRAINT flight_ibfk_1 FOREIGN KEY ("DepartureLoc") REFERENCES location ("LocID"),
-    CONSTRAINT flight_ibfk_2 FOREIGN KEY ("Destination") REFERENCES location (LocID"),
-    CONSTRAINT flight_ibfk_3 FOREIGN KEY ("SpaceShipID") REFERENCES spaceship ("ShipID"),
-    CONSTRAINT flight_ibfk_4 FOREIGN KEY ("CarrierID") REFERENCES spacecarrier ("CarrierID"), 
-    CONSTRAINT flight_ibfk_5 FOREIGN KEY ("TicketNum") REFERENCES ticket ("TicketNum")
+    DepartureLoc int NOT NULL,
+    Destination int NOT NULL,
+    SpaceShipID int NOT NULL,
+    CarrierID int NOT NULL,
+    PRIMARY KEY (FlightID),
+    CONSTRAINT flight_ibfk_1 FOREIGN KEY (DepartureLoc) REFERENCES location (LocID),
+    CONSTRAINT flight_ibfk_2 FOREIGN KEY (Destination) REFERENCES location (LocID),
+    CONSTRAINT flight_ibfk_3 FOREIGN KEY (SpaceShipID) REFERENCES spaceship (ShipID),
+    CONSTRAINT flight_ibfk_4 FOREIGN KEY (CarrierID) REFERENCES spacecarrier (CarrierID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
@@ -97,13 +90,12 @@ db.query(`CREATE TABLE flight (
 });
 
 db.query(`CREATE TABLE ticket (
-    TicketNum int NOT NULL,
-    PassengerID int DEFAULT NULL,
-    PRIMARY KEY ("TicketNum"),
-    KEY PassengerID ("PassengerID"),
-    KEY fk ("FlightID"),
-    CONSTRAINT fk FOREIGN KEY ("FlightID") REFERENCES flight ("FlightID"),
-    CONSTRAINT ticket_ibfk_1 FOREIGN KEY ("PassengerID") REFERENCES passenger ("PassengerID")
+    TicketNum int NOT NULL AUTO_INCREMENT,
+    PassengerID int NOT NULL,
+    FLightID int NOT NULL,
+    PRIMARY KEY (TicketNum),
+    CONSTRAINT fk FOREIGN KEY (FlightID) REFERENCES flight (FlightID),
+    CONSTRAINT ticket_ibfk_1 FOREIGN KEY (PassengerID) REFERENCES passenger (PassengerID)
     )`, (err, result) => {
     if (err) {
         console.log(err)
