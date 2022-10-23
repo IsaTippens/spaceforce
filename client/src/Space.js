@@ -35,13 +35,13 @@ function Space() {
     <Canvas orthographic camera={{zoom: 2, position: [0, 0, 1]}}>
     <ambientLight />
     <pointLight position={[10, 10, 10]} />
-    <Orbit radius={110} position={sunPos}/>
-    <Orbit radius={85} position={sunPos}/>
-    <Orbit radius={70} position={sunPos}/>
-    <Orbit radius={40} position={sunPos}/>
-    <Orbit radius={30} position={sunPos}/>
-    <Orbit radius={20} position={sunPos}/>
-    <Orbit radius={10} position={sunPos} />
+    <Orbit innerRadius={110} outerRadius={111} position={sunPos}/>
+    <Orbit innerRadius={85} outerRadius={86} position={sunPos}/>
+    <Orbit innerRadius={70} outerRadius={71} position={sunPos}/>
+    <Orbit innerRadius={40} outerRadius={41} position={sunPos}/>
+    <Orbit innerRadius={30} outerRadius={31} position={sunPos}/>
+    <Orbit innerRadius={20} outerRadius={21} position={sunPos}/>
+    <Orbit innerRadius={10} outerRadius={11} position={sunPos} />
 
     <Planet position={sunPos} colour="yellow" radius={5}/>
     <Planet position={mercuryPos} colour="grey" radius={2}/>

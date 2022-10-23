@@ -11,10 +11,9 @@ function Orbit(props) {
       <mesh
         {...props}
         ref={ref}>
-        <circleGeometry args={
-            [props.radius, 12] 
+        <ringGeometry args={
+            [props.innerRadius, props.outerRadius, 30] 
         } ref={circGeoRef}/>
-        <edgesGeometry />
         <meshStandardMaterial/>
       </mesh>
     )
