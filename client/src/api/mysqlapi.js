@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const URL = process.env.SPACEFORCE_URL || "http://localhost:3002"
+const URL = process.env.REACT_APP_SPACEFORCE_URL || "http://localhost:3002"
 
 export const get = async(endpoint) => {
     return axios.get(URL + endpoint)
