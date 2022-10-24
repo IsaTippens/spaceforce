@@ -14,7 +14,7 @@ export const getPassengerByPassport = async (passport) => {
     return await get(ENDPOINT + `/passport/${passport}`)
 }
 
-export const createPassenger = async(passengerName, passportNum) => {
+export const createPassenger = async (passengerName, passportNum) => {
     return await post(ENDPOINT + "/create", {
         passportNum,
         passName: passengerName
