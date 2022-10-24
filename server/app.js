@@ -29,9 +29,23 @@ app.get("/api/passenger/:id", (req, res) => {
         });
 });
 
+app.get("/api/passenger/passport/:num", (req, res) => {
+    const num = req.params.num;
+    db.query("SELECT * FROM passenger WHERE passportNum = ?", num,
+        (err, result) => {
+            //If theres an error with the query
+            // Print it to the console
+            if (err) {
+                console.log(err)
+            }
+            // Sends the result of the query to the client
+            res.send(result)
+        });
+});
+
 app.get("/api/passenger", (req, res) => {
     const id = req.params.id;
-    db.query("SELECT * FROM passenger", id,
+    db.query("SELECT * FROM passenger",
         (err, result) => {
             //If theres an error with the query
             // Print it to the console
@@ -153,7 +167,9 @@ app.get("/api/ticket",(req,res) =>{
 app.post("/api/ticket/create",(req,res)=>{
     const passengerID = req.body.passengerID
     const flightID = req.body.FlightID
-    db.query("INSERT INTO ticket (PassengerId,FlightId) VALUES(?,?)",[passengerID,flightID],(err,result)=>{
+    const flightClass = req.body.flightClass;
+    const flightType = req.body.flightType;
+    db.query("INSERT INTO ticket (PassengerId,FlightId,FlightClass,FlightType) VALUES(?,?)",[passengerID,flightID,flightClass,flightType],(err,result)=>{
         if(err){
             console.log(err)
         }
@@ -169,18 +185,23 @@ app.post("/api/passenger/create",(req,res)=>{
             console.log(err)
         }
         console.log(result)
+        res.send({
+            success: true,
+            name: passName,
+            passport: passportNum,
+            id: result.insertedId
+        })
     });
 })
 //Create a flight 
 app.post("/api/flight/create",(req,res)=>{
     const deptTime = req.body.deptTime;
-    const flightClass = req.body.flightClass;
-    const flightType = req.body.flightType;
+
     const depLoc = req.body.depLoc;
     const dest = req.body.dest;
     const shipID = req.body.shipID;
     const carrierID = req.body.carrierID;
-    db.query("INSERT INTO passenger (DepartureTime,FlightClass,FlightType,DepartureLoc,Destination,SpaceShipID,CarrierID,) VALUES(?,?,?,?,?,?,?)",[deptTime,flightClass,flightType,depLoc,dest,shipID,carrierID],(err,result)=>{
+    db.query("INSERT INTO passenger (DepartureTime,DepartureLoc,Destination,SpaceShipID,CarrierID,) VALUES(?,?,?,?,?,?,?)",[deptTime,depLoc,dest,shipID,carrierID],(err,result)=>{
         if(err){
             console.log(err)
         }
