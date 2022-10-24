@@ -14,7 +14,7 @@ db.query("SELECT * FROM passenger", (err, result) => {
 });
 //Gets ALL passengers
 // Click this
-// http://localhost:3002/api/passenger/getFromId/1
+// http://localhost:3002/api/passenger/1
 app.get("/api/passenger/:id", (req, res) => {
     const id = req.params.id;
     db.query("SELECT * FROM passenger WHERE PassengerID = ?", id,
