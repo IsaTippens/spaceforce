@@ -9,3 +9,10 @@ export const getPassenger = async (id) => {
 export const getPassengers = async() => {
     return await get(ENDPOINT)
 }
+
+export const createPassenger = async(passengerName, passportNum) => {
+    return await post(ENDPOINT + "/create", {
+        passportNum,
+        passName: passengerName
+    })
+}
