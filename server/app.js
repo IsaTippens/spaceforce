@@ -173,7 +173,9 @@ app.post("/api/ticket/create",(req,res)=>{
         if(err){
             console.log(err)
         }
-        console.log(result)
+        return {
+            id: result.insertId
+        }
     });
 })
 //Create a passenger 
@@ -186,17 +188,15 @@ app.post("/api/passenger/create",(req,res)=>{
         }
         console.log(result)
         res.send({
-            success: true,
             name: passName,
             passport: passportNum,
-            id: result.insertedId
+            id: result.insertId
         })
     });
 })
 //Create a flight 
 app.post("/api/flight/create",(req,res)=>{
     const deptTime = req.body.deptTime;
-
     const depLoc = req.body.depLoc;
     const dest = req.body.dest;
     const shipID = req.body.shipID;
@@ -206,6 +206,9 @@ app.post("/api/flight/create",(req,res)=>{
             console.log(err)
         }
         console.log(result)
+        return {
+            id: result.insertId
+        }
     });
 })
 app.delete('/api/ticket/cancel/:id',(req,res)=>{
