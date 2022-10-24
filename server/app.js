@@ -15,7 +15,7 @@ db.query("SELECT * FROM passenger", (err, result) => {
 //Gets ALL passengers
 // Click this
 // http://localhost:3002/api/passenger/getFromId/1
-app.get("/api/passenger/getFromId/:id", (req, res) => {
+app.get("/api/passenger/:id", (req, res) => {
     const id = req.params.id;
     db.query("SELECT * FROM passenger WHERE PassengerID = ?", id,
         (err, result) => {
@@ -28,9 +28,23 @@ app.get("/api/passenger/getFromId/:id", (req, res) => {
             res.send(result)
         });
 });
+
+app.get("/api/passenger", (req, res) => {
+    const id = req.params.id;
+    db.query("SELECT * FROM passenger", id,
+        (err, result) => {
+            //If theres an error with the query
+            // Print it to the console
+            if (err) {
+                console.log(err)
+            }
+            // Sends the result of the query to the client
+            res.send(result)
+        });
+});
  
 //Get single location
-app.get("/api/location/getLocFromId/:id",(req,res) =>{
+app.get("/api/location/:id",(req,res) =>{
     const id =req.params.id;
     db.query("SELECT * FROM location WHERE LocID = ?",id,
     (err,result) => {
@@ -41,7 +55,7 @@ app.get("/api/location/getLocFromId/:id",(req,res) =>{
     });
 });
 //Get all location
-app.get("/api/location/getAllLoc",(req,res) =>{
+app.get("/api/location/",(req,res) =>{
     db.query("SELECT * FROM location ",
     (err,result) => {
         if (err){
@@ -51,7 +65,7 @@ app.get("/api/location/getAllLoc",(req,res) =>{
     });
 });
 //Get single spacecarrier
-app.get("/api/spacecarrier/getCarrierFromId/:id",(req,res) =>{
+app.get("/api/spacecarrier/:id",(req,res) =>{
     const id = req.params.id
     db.query("SELECT * FROM spacecarrier WHERE CarrierID = ?",id,
     (err,result) => {
@@ -62,7 +76,7 @@ app.get("/api/spacecarrier/getCarrierFromId/:id",(req,res) =>{
     });
 });
 //Get all spacecarriers 
-app.get("/api/spacecarrier/getAllCarriers",(req,res) =>{
+app.get("/api/spacecarrier",(req,res) =>{
     db.query("SELECT * FROM spacecarrier ",
     (err,result) => {
         if (err){
@@ -72,7 +86,7 @@ app.get("/api/spacecarrier/getAllCarriers",(req,res) =>{
     });
 });
 //Get single spaceship
-app.get("/api/spaceship/getShipFromId/:id",(req,res) =>{
+app.get("/api/spaceship/:id",(req,res) =>{
     const id = req.params.id
     db.query("SELECT * FROM spaceship WHERE ShipID = ?",id,
     (err,result) => {
@@ -83,7 +97,7 @@ app.get("/api/spaceship/getShipFromId/:id",(req,res) =>{
     });
 });
 //Get all spaceship 
-app.get("/api/spaceship/getAllShips",(req,res) =>{
+app.get("/api/spaceship",(req,res) =>{
     db.query("SELECT * FROM spaceship ",
     (err,result) => {
         if (err){
@@ -93,7 +107,7 @@ app.get("/api/spaceship/getAllShips",(req,res) =>{
     });
 });
 //Get a single flight
-app.get("/api/flight/getFlightFromId/:id",(req,res) =>{
+app.get("/api/flight/:id",(req,res) =>{
     const id = req.params.id
     db.query("SELECT * FROM flight WHERE FlightID = ?",id,
     (err,result) => {
@@ -104,7 +118,7 @@ app.get("/api/flight/getFlightFromId/:id",(req,res) =>{
     });
 });
 //Get all flights 
-app.get("/api/flight/getAllFlights",(req,res) =>{
+app.get("/api/flight",(req,res) =>{
     db.query("SELECT * FROM flight ",
     (err,result) => {
         if (err){
@@ -114,7 +128,7 @@ app.get("/api/flight/getAllFlights",(req,res) =>{
     });
 });
 //Get single ticket
-app.get("/api/ticket/getTicketFromId/:id",(req,res) =>{
+app.get("/api/ticket/:id",(req,res) =>{
     const id = req.params.id
     db.query("SELECT * FROM ticket WHERE TicketNum = ?",id,
     (err,result) => {
@@ -125,7 +139,7 @@ app.get("/api/ticket/getTicketFromId/:id",(req,res) =>{
     });
 });
 //Get all ticket 
-app.get("/api/ticket/getAllTickets",(req,res) =>{
+app.get("/api/ticket",(req,res) =>{
     db.query("SELECT * FROM spaceship ",
     (err,result) => {
         if (err){
@@ -150,7 +164,7 @@ app.post("/api/ticket/create",(req,res)=>{
 app.post("/api/passenger/create",(req,res)=>{
     const passportNum = req.body.passportNum
     const passName = req.body.passName
-    db.query("INSERT INTO passenger ( PassportNum,PassengerName) VALUES(?,?)",[passportNum,passName],(err,result)=>{
+    db.query("INSERT INTO passenger (PassportNum, PassengerName) VALUES(?,?)",[passportNum,passName],(err,result)=>{
         if(err){
             console.log(err)
         }
