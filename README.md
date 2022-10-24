@@ -10,7 +10,7 @@ Change directory to the server folder
 
 To create the Database and tables run 
 
-`npm create-mysql`
+`npm run create-mysql`
 
 To run the server, and do
 
