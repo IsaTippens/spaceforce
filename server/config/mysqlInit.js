@@ -71,8 +71,6 @@ db.query(`CREATE TABLE spaceship (
 db.query(`CREATE TABLE flight (
     FlightID int NOT NULL AUTO_INCREMENT,
     DepartureTime int DEFAULT NULL,
-    FlightClass varchar(255) DEFAULT NULL,
-    FlightType varchar(255) DEFAULT NULL,
     DepartureLoc int NOT NULL,
     Destination int NOT NULL,
     SpaceShipID int NOT NULL,
@@ -93,6 +91,8 @@ db.query(`CREATE TABLE ticket (
     TicketNum int NOT NULL AUTO_INCREMENT,
     PassengerID int NOT NULL,
     FLightID int NOT NULL,
+    FlightClass varchar(255) DEFAULT NULL,
+    FlightType varchar(255) DEFAULT NULL,
     PRIMARY KEY (TicketNum),
     CONSTRAINT fk FOREIGN KEY (FlightID) REFERENCES flight (FlightID),
     CONSTRAINT ticket_ibfk_1 FOREIGN KEY (PassengerID) REFERENCES passenger (PassengerID)
