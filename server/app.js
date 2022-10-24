@@ -51,7 +51,7 @@ app.get("/api/location/getAllLoc",(req,res) =>{
     });
 });
 //Get single spacecarrier
-app.get("/api/spacecarrier/getCarrieFromId/:id",(req,res) =>{
+app.get("/api/spacecarrier/getCarrierFromId/:id",(req,res) =>{
     const id = req.params.id
     db.query("SELECT * FROM spacecarrier WHERE CarrierID = ?",id,
     (err,result) => {
@@ -104,7 +104,7 @@ app.get("/api/flight/getFlightFromId/:id",(req,res) =>{
     });
 });
 //Get all flights 
-app.get("/api/flightp/getAllFlights",(req,res) =>{
+app.get("/api/flight/getAllFlights",(req,res) =>{
     db.query("SELECT * FROM flight ",
     (err,result) => {
         if (err){
@@ -149,7 +149,7 @@ app.post("/api/ticket/create",(req,res)=>{
 //Create a passenger 
 app.post("/api/passenger/create",(req,res)=>{
     const passportNum = req.body.passportNum
-    const passName = rey.body.passName
+    const passName = req.body.passName
     db.query("INSERT INTO passenger ( PassportNum,PassengerName) VALUES(?,?)",[passportNum,passName],(err,result)=>{
         if(err){
             console.log(err)
@@ -173,7 +173,7 @@ app.post("/api/flight/create",(req,res)=>{
         console.log(result)
     });
 })
-app.delete('/api/ticket/cancle/:id',(req,res)=>{
+app.delete('/api/ticket/cancel/:id',(req,res)=>{
     const id = req.params.id;
     db.query("DELETE FROM ticket WHERE id =?",id,(err,result)=>{
         if(err){console.log(err)}
