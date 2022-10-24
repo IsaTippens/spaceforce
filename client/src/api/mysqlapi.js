@@ -16,7 +16,8 @@ export const get = async(endpoint) => {
 }
 
 export const post = async(endpoint, data) => {
-    let response = axios.post(URL + endpoint, data) ;
+    let response = await axios.post(URL + endpoint, data) ;
+    console.log(response)
     if (response.status != 200) {
         return {
             sucess: false,
@@ -28,3 +29,19 @@ export const post = async(endpoint, data) => {
         data: response.data
     }
 }
+
+export const del = async(endpoint) => {
+    let response = await axios.delete(URL + endpoint);
+    console.log(response)
+    if (response.status != 200) {
+        return {
+            sucess: false,
+            data: []
+        }
+    }
+    return {
+        success: true,
+        data: response.data
+    }
+}
+
