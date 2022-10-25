@@ -68,6 +68,19 @@ app.get("/api/location/:id",(req,res) =>{
         res.send(result)
     });
 });
+
+//Get single location by name
+app.get("/api/location/name/:name",(req,res) =>{
+    const name =req.params.name;
+    db.query("SELECT * FROM location WHERE LocName = ?", name,
+    (err,result) => {
+        if (err){
+            console.log(err)
+        }
+        res.send(result)
+    });
+});
+
 //Get all location
 app.get("/api/location/",(req,res) =>{
     db.query("SELECT * FROM location ",
@@ -131,6 +144,27 @@ app.get("/api/flight/:id",(req,res) =>{
         res.send(result)
     });
 });
+
+//Get a single flight by details
+app.get("/api/flight/:date/:deptid/:destid/:shipid/:carrid",(req,res) =>{
+    const date = req.params.date
+    const deptid = req.params.deptid
+    const destid = req.params.destid
+    const shipid = req.params.shipid
+    const carr = req.params.carrid
+    db.query(`SELECT * FROM flight 
+    WHERE DepartureTime = ?
+    AND DepartureLoc = ?
+    AND Destination = ?
+    AND SpaceShipID = ?
+    AND CarrierID = ?`,[date, deptid, destid, shipid, carr],
+    (err,result) => {
+        if (err){
+            console.log(err)
+        }
+        res.send(result)
+    });
+});
 //Get all flights 
 app.get("/api/flight",(req,res) =>{
     db.query("SELECT * FROM flight ",
@@ -141,6 +175,7 @@ app.get("/api/flight",(req,res) =>{
         res.send(result)
     });
 });
+
 //Get single ticket
 app.get("/api/ticket/:id",(req,res) =>{
     const id = req.params.id
