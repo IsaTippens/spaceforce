@@ -204,13 +204,14 @@ app.post("/api/ticket/create",(req,res)=>{
     const flightID = req.body.FlightID
     const flightClass = req.body.flightClass;
     const flightType = req.body.flightType;
-    db.query("INSERT INTO ticket (PassengerId,FlightId,FlightClass,FlightType) VALUES(?,?)",[passengerID,flightID,flightClass,flightType],(err,result)=>{
+    db.query("INSERT INTO ticket (PassengerId,FlightId,FlightClass,FlightType) VALUES(?,?,?,?)",[passengerID,flightID,flightClass,flightType],(err,result)=>{
         if(err){
             console.log(err)
+            return
         }
-        return {
+        res.send({
             id: result.insertId
-        }
+        })
     });
 })
 //Create a passenger 
@@ -220,6 +221,7 @@ app.post("/api/passenger/create",(req,res)=>{
     db.query("INSERT INTO passenger (PassportNum, PassengerName) VALUES(?,?)",[passportNum,passName],(err,result)=>{
         if(err){
             console.log(err)
+            return
         }
         console.log(result)
         res.send({
@@ -236,14 +238,15 @@ app.post("/api/flight/create",(req,res)=>{
     const dest = req.body.dest;
     const shipID = req.body.shipID;
     const carrierID = req.body.carrierID;
-    db.query("INSERT INTO passenger (DepartureTime,DepartureLoc,Destination,SpaceShipID,CarrierID,) VALUES(?,?,?,?,?,?,?)",[deptTime,depLoc,dest,shipID,carrierID],(err,result)=>{
+    db.query("INSERT INTO flight (DepartureTime,DepartureLoc,Destination,SpaceShipID,CarrierID) VALUES(?,?,?,?,?)",[deptTime,depLoc,dest,shipID,carrierID],(err,result)=>{
         if(err){
             console.log(err)
+            return
         }
         console.log(result)
-        return {
+        res.send({
             id: result.insertId
-        }
+        })
     });
 })
 app.delete('/api/ticket/cancel/:id',(req,res)=>{
