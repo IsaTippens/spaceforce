@@ -124,6 +124,10 @@ function Booking(props) {
     }
 
     const proceedClick = () => {
+        if (passengers.length === 0) {
+            alert("There needs to be atleast 1 Passenger booking")
+            return
+        }
         let t = getTotal()
         const bookingInfo = {
             origin,
