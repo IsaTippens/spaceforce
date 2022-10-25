@@ -1,16 +1,16 @@
 import {get, post, del} from './mysqlapi';
 
-ENDPOINT = "/api/ticket"
+const ENDPOINT = "/api/ticket";
 
-const getTicket = async (id) => {
+export const getTicket = async (id) => {
     return await get(ENDPOINT + `/{id}`)
 } 
 
-const getTickets = async () => {
+export const getTickets = async () => {
     return await get(ENDPOINT)
 } 
 
-const createTicket = async(passengerId, flightId, flightClass, flightType) => {
+export const createTicket = async(passengerId, flightId, flightClass, flightType) => {
     return await post(ENDPOINT + "/create", {
         passengerID: passengerId,
         FlightID: flightId,
@@ -19,6 +19,6 @@ const createTicket = async(passengerId, flightId, flightClass, flightType) => {
     })
 }
 
-const deleteTicket = async(id) => {
+export const deleteTicket = async(id) => {
     return await del(ENDPOINT + `/{id}`)
 }
