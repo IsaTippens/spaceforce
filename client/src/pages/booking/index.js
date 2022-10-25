@@ -32,6 +32,9 @@ function Booking(props) {
                 setDepartureDate(bd.departureDate);
                 setReturnDate(bd.returnDate);
             }
+            if (location.state.passengerData) {
+                setPassengers(location.state.passengerData)
+            }
         }
         let s = location.state;
         if (s.flightClass) {
@@ -262,6 +265,7 @@ function Booking(props) {
                             <Typography variant="p" align="left">
                                 Passengers
                             </Typography>
+                            
                             <Stack direction="column"
                                 alignItems="left" spacing={2} flex={2}>
                                 <Paper style={{ maxHeight: '100%' }}>
