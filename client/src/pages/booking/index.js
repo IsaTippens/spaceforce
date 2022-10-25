@@ -148,7 +148,7 @@ function Booking(props) {
                 numAdults,
                 numChildren,
                 bookingData: bookingInfo,
-                passengersData: passengers,
+                passengerData: passengers,
                 total: t
             }
         })
