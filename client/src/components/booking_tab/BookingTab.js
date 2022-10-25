@@ -3,7 +3,7 @@ import LocationSelect from "../location_select";
 import FlightTypeSelect from "../flight_type_select";
 import FlightDatePicker from "../flight_date_picker";
 import { useState, useEffect } from 'react';
-import {useNavigate, useLocation} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 //import moment
 import moment from 'moment';
 
@@ -21,25 +21,39 @@ function BookingTab(props) {
             alert("Departure location and Destination cannot be the same!");
             return;
         }
+        const bookingData = {
+            origin: origin,
+            destination: destination,
+            flightType: flightType,
+            departureDate: departureDate,
+            returnDate: returnDate,
+            ...location.state.bookingData
+        }
         navigate("/booking", {
+
             state: {
                 origin: origin,
                 destination: destination,
                 flightType: flightType,
                 departureDate: departureDate,
                 returnDate: returnDate,
+                bookingData
             }
         });
     }
 
     useEffect(() => {
         if (location.state) {
-            setOrigin(location.state.origin);
-            setDestination(location.state.destination);
-            setFlightType(location.state.flightType);
-            setDepartureDate(location.state.departureDate);
-            setReturnDate(location.state.returnDate);
-            return;
+            if (location.state.bookingData) {
+                let bd = location.state.bookingData;
+                setOrigin(bd.origin);
+                setDestination(bd.destination);
+                setFlightType(bd.flightType);
+                setDepartureDate(bd.departureDate);
+                setReturnDate(bd.returnDate);
+
+                return;
+            }
         }
         //Set departure date to today yyyy-mm-dd
         setDepartureDate(moment(new Date()).format("YYYY-MM-DD"));
@@ -67,11 +81,11 @@ function BookingTab(props) {
                             value={departureDate}
                         />
                         {
-                            flightType == "Round-Trip" ? (<FlightDatePicker label="Return" sx={{ width: "100%" }} 
-                            onChange = {(e) => {
-                                setReturnDate(e.target.value);
-                            }}
-                            value = {returnDate}
+                            flightType == "Round-Trip" ? (<FlightDatePicker label="Return" sx={{ width: "100%" }}
+                                onChange={(e) => {
+                                    setReturnDate(e.target.value);
+                                }}
+                                value={returnDate}
                             />) : null
                         }
                     </Stack>
