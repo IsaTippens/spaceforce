@@ -110,4 +110,47 @@ db.query(`CREATE TABLE ticket (
     console.log(result)
 });
 
+const planets = [
+    ["Earth", "Planet", "A"],
+    ["Mars", "Planet", "A"],
+    ["Jupiter", "Space Station", "A"],
+    ["Saturn", "Space Station", "A"],
+    ["Uranus", "Space Station", "A"],
+    ["Neptune", "Space Station", "A"],
+    ["Pluto", "Space Station", "A"]
+]
+
+planets.map((val) => {
+    db.query(`
+    INSERT INTO location(LocName, LocType, LandingZone)
+    VALUES (?, ?, ?)`,
+        [val[0], val[1], val[2]], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(result)
+        })
+
+})
+
+db.query(`
+INSERT INTO spaceship(Capacity, Model)
+VALUES (256, "Cruiser")
+`, (err, result) => {
+    if (err) {
+        console.log(err)
+    }
+    console.log(result)
+})
+
+db.query(`
+INSERT INTO spacecarrier(CarrierName)
+VALUES ("SpaceForce Flight Agency")
+`, (err, result) => {
+    if (err) {
+        console.log(err)
+    }
+    console.log(result)
+})
+
 db.end()
