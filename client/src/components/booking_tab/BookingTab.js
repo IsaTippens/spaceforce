@@ -27,8 +27,9 @@ function BookingTab(props) {
             flightType: flightType,
             departureDate: departureDate,
             returnDate: returnDate,
-            ...location.state.bookingData
         }
+
+
         navigate("/booking", {
 
             state: {
