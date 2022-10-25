@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Paper, Typography, Container, Stack, TextField, Button, Breadcrumbs, Grid } from "@mui/material";
+import { Paper, Typography, Container, Stack, TextField, Button, Breadcrumbs, Grid, Box, List } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getFlightDetails, createFlight, getFlight } from '../../api/flight';
+import { createTicket } from '../../api/ticket'
+import { getPassengerByPassport, createPassenger } from '../../api/passenger';
+import { getLocationByName } from '../../api/location'
 
 function Payment(props) {
     const [cardNumber, setCardNumber] = useState("");
@@ -8,15 +12,19 @@ function Payment(props) {
     const [expiryDate, setExpiryDate] = useState("");
     const [total, setTotal] = useState(0);
     const [bookingId, setBookingId] = useState("");
+    const [passengers, setPassengers] = useState([])
 
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         document.title = "Payment | SpaceForce Flight Agency";
-        setBookingId(genID());
         if (location.state) {
             setTotal(location.state.total);
+            if (location.state.passengerData) {
+                setPassengers(location.state.passengerData)
+            }
+
         }
     }, []);
     const backClick = () => {
@@ -25,46 +33,65 @@ function Payment(props) {
                 state: location.state,
             });
     }
-    const proceedClick = () => {
+    const proceedClick = async () => {
+        let data = await processPayment();
+        console.log({ data })
         navigate("/receipt",
             {
-                state: location.state,
+                state: {
+                    FlightDetails: data.flightDetails,
+                    Tickets: data.tickets,
+                    ...location.state
+                },
             });
     }
 
-    const genID = () => {
-        let id = "#";
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const numbers = "0123456789";
-        for (let i = 0; i < 3; i++) {
-            id += letters.charAt(Math.floor(Math.random() * letters.length));
-        }
-        for (let i = 0; i < 3; i++) {
-            id += numbers.charAt(Math.floor(Math.random() * numbers.length));
-        }
-        return id;
-    }
+    const processPayment = async () => {
+        var bookingData = location.state.bookingData
 
-    const children = (num) => {
-        if (num <= 0) {
-            return null
-        }
-        if (num === 1) {
-            return "1 Child";
-        }
-        return num + " Children";
-    }
+        let dept = await getLocationByName(bookingData.origin)
+        let dest = await getLocationByName(bookingData.destination)
+        let flightid = 0;
+        let flight = await getFlightDetails(bookingData.departureDate, dept.data[0].LocID, dest.data[0].LocID, 1, 1)
 
-    const adults = (num) => {
-        if (num <= 0) {
-            return null
+        if (flight.data.length === 0) {
+            let result = await createFlight(bookingData.departureDate, dept.data[0].LocID, dest.data[0].LocID, 1, 1)
+            flightid = result.data[0].id
+        } else {
+            flightid = flight.data[0].FlightID
         }
-        if (num === 1) {
-            return "1 Adult";
+        var tickets = []
+        for (const val of passengers) {
+            let passId = 0
+            let pass = await getPassengerByPassport(val.passportNum)
+            if (pass.data.length === 0) {
+                let p = await createPassenger(val.name, val.passportNum)
+                passId = p.data[0].id
+            } else {
+                passId = pass.data[0].PassengerID
+            }
+            let tick = await createTicket(passId, flightid, bookingData.flightClass, bookingData.flightType)
+            let t = {
+                PassengerID: passId,
+                TicketID: tick.data.id,
+                PassengerName: val.name
+            }
+            tickets.push(t)
         }
-        return num + " Adults";
-    }
+        const flightDetails = {
+            FlightID: flightid,
+            DepartureDate: bookingData.departureDate,
+            DepartureLocation: bookingData.origin,
+            DestinationLocation: bookingData.destination,
+            FlightClass: bookingData.flightClass,
+            FlightType: bookingData.flightType
+        }
+        return {
+            tickets,
+            flightDetails
+        }
 
+    }
 
     return (
         <Paper>
@@ -124,9 +151,6 @@ function Payment(props) {
                     </Grid>
                     <Grid item xs={4}>
                         <Stack spacing={2} p={1}>
-                            <Typography variant="h5">
-                                Ticket {bookingId}
-                            </Typography>
                             <Typography variant="body1" >
                                 Departing from {location.state.origin} to {location.state.destination}
                             </Typography>
@@ -142,13 +166,17 @@ function Payment(props) {
                             <Typography variant="h6">
                                 Passengers
                             </Typography>
-                            <Typography variant="body1">
-                                {adults(location.state.numAdults)}
-                            </Typography>
-                            <Typography variant="body1">
-                                {children(location.state.numChildren)}
-                            </Typography>
-
+                            <Stack sx={{ overflow: 'auto' }} spacing={1}>
+                                {
+                                    passengers.map((val) => {
+                                        return (
+                                            <Typography variant="p" align="left">
+                                                {val.name}
+                                            </Typography>
+                                        )
+                                    })
+                                }
+                            </Stack>
                         </Stack>
                     </Grid>
                 </Grid>
