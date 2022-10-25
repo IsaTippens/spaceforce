@@ -77,7 +77,7 @@ db.query(`CREATE TABLE spaceship (
 
 db.query(`CREATE TABLE flight (
     FlightID int NOT NULL AUTO_INCREMENT,
-    DepartureTime int DEFAULT NULL,
+    DepartureTime VARCHAR(255) DEFAULT NULL,
     DepartureLoc int NOT NULL,
     Destination int NOT NULL,
     SpaceShipID int NOT NULL,
