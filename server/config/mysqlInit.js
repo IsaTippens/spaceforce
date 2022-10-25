@@ -6,6 +6,13 @@ const db = mysql.createConnection({
     password: process.env.MYSQL_PASSWORD || "",
 })
 
+db.query(`DROP DATABASE spaceforce`, (err, result) => {
+    if (err) {
+        console.log(err)
+    }
+    console.log(result)
+});
+
 db.query(`CREATE DATABASE spaceforce`, (err, result) => {
     if (err) {
         console.log(err)
@@ -22,7 +29,7 @@ db.query(`USE spaceforce`, (err, result) => {
 
 db.query(`CREATE TABLE passenger (
     PassengerID int NOT NULL AUTO_INCREMENT,
-    PassportNum int NOT NULL,
+    PassportNum int NOT NULL UNIQUE,
     PassengerName varchar(255) NOT NULL,
     PRIMARY KEY (PassengerID)
     )`, (err, result) => {
