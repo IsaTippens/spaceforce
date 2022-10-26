@@ -35,7 +35,6 @@ function Payment(props) {
     }
     const proceedClick = async () => {
         let data = await processPayment();
-        console.log({ data })
         navigate("/receipt",
             {
                 state: {
