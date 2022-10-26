@@ -1,5 +1,9 @@
 # SpaceForce Flight Agency
 
+## Abstract
+
+This application is submitted in fulfilment of the capstone project for the completion of the Computer Science degree from UWC
+
 ## Running
 
 ### Server backend
