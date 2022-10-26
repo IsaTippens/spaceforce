@@ -56,7 +56,8 @@ function Payment(props) {
 
         if (flight.data.length === 0) {
             let result = await createFlight(bookingData.departureDate, dept.data[0].LocID, dest.data[0].LocID, 1, 1)
-            flightid = result.data[0].id
+            flightid = result.data.id
+            
         } else {
             flightid = flight.data[0].FlightID
         }
@@ -66,7 +67,7 @@ function Payment(props) {
             let pass = await getPassengerByPassport(val.passportNum)
             if (pass.data.length === 0) {
                 let p = await createPassenger(val.name, val.passportNum)
-                passId = p.data[0].id
+                passId = p.data.id
             } else {
                 passId = pass.data[0].PassengerID
             }
